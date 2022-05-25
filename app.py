@@ -6,7 +6,7 @@ from transformers import AutoConfig
 from transformers import TFAutoModelForSequenceClassification
 from transformers import AutoTokenizer
 from scipy.special import softmax
-import urllib.request
+
 
 def preprocess(text):
     new_text = []
@@ -40,7 +40,7 @@ HATE_MODEL = f"cardiffnlp/twitter-roberta-base-hate"
 HATE_LABELS = ['Not-Hate', 'Hate']
 
 h_model, h_tokenizer = load_model(HATE_MODEL)
-s_model, s_tokenizer = load_model(SENTIMENT_MODEL)
+#s_model, s_tokenizer = load_model(SENTIMENT_MODEL)
 
 #print(prediction('Fuck you immigrants', h_model, h_tokenizer))
 #print(prediction('Fuck you immigrants', s_model, s_tokenizer))
@@ -48,11 +48,12 @@ s_model, s_tokenizer = load_model(SENTIMENT_MODEL)
 st.title("Social media study of Toxic Speech towards Migrants!")
 tweet = st.text_input('Input Tweet', '')
 if st.button('Analyse'):
+	st.write(f'Results for the tweet: {tweet}')
 	lidx, prob = prediction(tweet, h_model, h_tokenizer)
 	st.write(f'The Tweet is flagged as {HATE_LABELS[lidx]} with a confidence score {prob}')
 
-	lidx, prob = prediction(tweet, s_model, s_tokenizer)
-	st.write(f'The Tweet is flagged as {SENTIMENT_LABELS[lidx]} sentiment with a confidence score {prob}')
+	#lidx, prob = prediction(tweet, s_model, s_tokenizer)
+	#st.write(f'The Tweet is flagged as {SENTIMENT_LABELS[lidx]} sentiment with a confidence score {prob}')
 
 	
 
